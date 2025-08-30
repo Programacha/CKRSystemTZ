@@ -5,8 +5,8 @@ namespace _Scripts.MVP.Clicker
 {
     public class ClickerModel
     {
-        public ReactiveProperty<int> Money { get; private set; } = new ReactiveProperty<int>(0);
-        public ReactiveProperty<int> Energy { get; private set; } = new ReactiveProperty<int>(1000); 
+        public ReactiveProperty<int> Money { get;} = new (0);
+        public ReactiveProperty<int> Energy { get;} = new (1000); 
     
         private readonly GameSettings _settings;
 

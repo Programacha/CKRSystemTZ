@@ -25,18 +25,8 @@ namespace _Scripts.MVP.DogBreed
                 var jsonData = await _apiService.GetBreedsList(_token);
                 if (jsonData != null)
                 {
-                    Debug.Log("Получен JSON: " + jsonData); // Проверка
                     var response = JsonUtility.FromJson<DogBreedParsing.BreedsResponse>(jsonData);
-                    if (response == null)
-                    {
-                        Debug.LogError("Ошибка парсинга: объект BreedsResponse равен null.");
-                        return;
-                    }
-                    if (response.data == null || response.data.Length == 0)
-                    {
-                        Debug.LogError("Ошибка парсинга: массив 'data' пуст или равен null.");
-                        return;
-                    }
+
                     if (response != null && response.data != null)
                     {
                         var breeds = new System.Collections.Generic.List<DogBreedParsing.BreedData>();
