@@ -1,6 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 
-namespace _Scripts
+namespace _Scripts.Network
 {
     public interface IRequest
     {

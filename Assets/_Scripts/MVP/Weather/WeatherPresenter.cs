@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Threading;
+using _Scripts.Network;
 using UniRx;
-using UnityEngine;
-using Zenject;
 
 namespace _Scripts.MVP.Weather
 {
-    public class WeatherPresenter : IInitializable, IDisposable, ITabPresenter
+    public class WeatherPresenter : IDisposable, ITabPresenter
     {
         private readonly WeatherModel _model;
         private readonly WeatherView _view;
@@ -15,7 +14,6 @@ namespace _Scripts.MVP.Weather
     
         private CancellationTokenSource _cancellationTokenSource;
         private readonly CompositeDisposable _disposables = new();
-        private readonly CompositeDisposable _timerDisposables = new();
 
         public WeatherPresenter(WeatherModel model, WeatherView view, NetworkRequestQueue queue, WeatherApiService apiService)
         {
@@ -25,11 +23,6 @@ namespace _Scripts.MVP.Weather
             _apiService = apiService;
         }
 
-        public void Initialize()
-        {
-            // _model.WeatherInfo.Subscribe(info => _view.SetWeatherInfo(info)).AddTo(_disposables);
-        }
-    
         public void OnTabActivated()
         {
             _cancellationTokenSource = new CancellationTokenSource();
@@ -43,7 +36,7 @@ namespace _Scripts.MVP.Weather
     
         public void OnTabDeactivated()
         {
-            _model.WeatherInfo.Value = "Загрузка";
+            _model.WeatherInfo.Value = "Загрузка...";
             _disposables.Clear();
             
             if (_cancellationTokenSource != null && !_cancellationTokenSource.IsCancellationRequested)
@@ -56,7 +49,6 @@ namespace _Scripts.MVP.Weather
 
         private void RequestWeather()
         {
-            Debug.Log("request weather");
             var request = new WeatherRequest(_apiService, _model, _cancellationTokenSource.Token);
             
             _queue.AddRequest(request);
@@ -65,7 +57,6 @@ namespace _Scripts.MVP.Weather
         public void Dispose()
         {
             _disposables.Dispose();
-            //_timerDisposables.Dispose();
             
             if (_cancellationTokenSource != null)
             {

@@ -30,11 +30,5 @@ namespace _Scripts.MVP.DogBreed
         {
             public BreedData data;
         }
-        
-        [Serializable]
-        public class BreedDescription
-        {
-            public string description;
-        }
     }
 }

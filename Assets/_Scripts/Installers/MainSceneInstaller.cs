@@ -1,6 +1,7 @@
 ﻿using _Scripts.MVP.Clicker;
 using _Scripts.MVP.DogBreed;
 using _Scripts.MVP.Weather;
+using _Scripts.Network;
 using UnityEngine;
 using Zenject;
 

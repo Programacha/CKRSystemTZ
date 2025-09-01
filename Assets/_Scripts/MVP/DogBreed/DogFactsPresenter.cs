@@ -1,6 +1,6 @@
 ﻿using System.Threading;
+using _Scripts.Network;
 using UniRx;
-using UnityEngine;
 using Zenject;
 
 namespace _Scripts.MVP.DogBreed
@@ -41,7 +41,6 @@ namespace _Scripts.MVP.DogBreed
 
         public void OnTabActivated()
         {
-            Debug.Log("OnTabActivated");
             _cancellationTokenSource = new CancellationTokenSource();
             
             _queue.AddRequest(new BreedsListRequest(_model, _apiService, _cancellationTokenSource.Token));
@@ -61,15 +60,13 @@ namespace _Scripts.MVP.DogBreed
 
         public void OnBreedClicked(string breedId)
         {
-            // Отменяем предыдущий запрос и удаляем его из очереди, если он есть
             if (_cancellationTokenSource != null)
             {
                 _cancellationTokenSource.Cancel();
                 _cancellationTokenSource.Dispose();
             }
             _cancellationTokenSource = new CancellationTokenSource();
-        
-            // Добавляем новый запрос
+            
             _queue.AddRequest(new BreedFactsRequest(_model, _apiService, breedId, _cancellationTokenSource.Token, this));
         }
 

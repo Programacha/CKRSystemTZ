@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using _Scripts.Network;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -20,7 +21,6 @@ namespace _Scripts.MVP.Weather
 
         public async UniTask Execute()
         {
-            // CancellationTokenSource, чтобы можно было отменить задачу
             var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(_cancellationToken);
     
             try
@@ -29,21 +29,15 @@ namespace _Scripts.MVP.Weather
         
                 if (jsonData != null)
                 {
-                    // Парсим JSON
                     var response = JsonUtility.FromJson<WeatherForecastResponse>(jsonData);
 
                     if (response != null && response.properties.periods.Length > 0)
                     {
                         var todayForecast = response.properties.periods[0];
-                
-                        // Формируем строку в нужном формате
+                        
                         string formattedString = $"Сегодня {todayForecast.temperature}{todayForecast.temperatureUnit}";
-                
-                        // Обновляем модель
+                        
                         _model.WeatherInfo.Value = formattedString;
-                
-                        // Здесь вы можете также загрузить иконку по URL и обновить View
-                        // await DownloadImage(todayForecast.icon);
                     }
                 }
             }

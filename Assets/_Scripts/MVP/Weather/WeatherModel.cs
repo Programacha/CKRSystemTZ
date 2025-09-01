@@ -4,6 +4,7 @@ namespace _Scripts.MVP.Weather
 {
     public class WeatherModel
     {
-        public ReactiveProperty<string> WeatherInfo { get; private set; } = new("Загрузка...");
+        public const string DOWNLOAD = "Загрузка...";
+        public ReactiveProperty<string> WeatherInfo { get; private set; } = new(DOWNLOAD);
     }
 }
